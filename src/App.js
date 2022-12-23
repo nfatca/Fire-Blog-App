@@ -1,6 +1,6 @@
 import AppRouter from "./app-router/AppRouter";
 import "./App.css";
-import Navbar from "./components/Navbar";
+
 import AuthContectProvider from "./contexts/AuthContectProvider";
 
 function App() {
