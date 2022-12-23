@@ -8,6 +8,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import cwLogo from "../assets/cw.jpeg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +19,21 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    display: "none",
+    fontFamily: "Girassol",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+    },
+    "& span": {
+      fontSize: 30,
+      color: "wheat",
+    },
+  },
+  appBar: {
+    backgroundColor: "#046582",
+  },
+  logo: {
+    width: "40px",
   },
 }));
 
@@ -36,7 +52,7 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -44,10 +60,10 @@ export default function Navbar() {
             color="inherit"
             aria-label="menu"
           >
-            <MenuIcon />
+            <img src={cwLogo} alt="logo" className={classes.logo} />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Photos
+            <span>Blog</span> App
           </Typography>
           <div>
             <IconButton
@@ -57,7 +73,7 @@ export default function Navbar() {
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle style={{ fontSize: "40px" }} />
             </IconButton>
             <Menu
               id="menu-appbar"
