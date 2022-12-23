@@ -1,4 +1,4 @@
-import React, { useContext, createContext } from "react";
+import React, { useContext, createContext, useState, useEffect } from "react";
 import { auth, googleProvider } from "../helpers/firebase";
 
 //! Create context for authentication data
@@ -10,6 +10,17 @@ export function useAuth() {
 }
 
 const AuthContectProvider = () => {
+  const [currentUser, setCurrentUser] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+    return unsubscribe;
+  }, []);
+
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
@@ -33,16 +44,21 @@ const AuthContectProvider = () => {
   function updateEmail(email) {
     return currentUser.updateEmail(email);
   }
+  function updatePassword(password) {
+    return currentUser.updatePassword(password);
+  }
 
   const values = {
+    currentUser,
     signup,
     login,
     logout,
-    loginWithGoogle,
     resetPassword,
+    updatePassword,
     updateEmail,
+    loginWithGoogle,
   };
-  return <AuthContect.Provider value={values}>{children}</AuthContect.Provider>;
+  return <AuthContect.Provider value={values}></AuthContect.Provider>;
 };
 
 export default AuthContectProvider;
