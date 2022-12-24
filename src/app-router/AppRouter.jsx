@@ -8,6 +8,7 @@ import Profile from "../pages/Profile";
 import UpdateBlog from "../pages/UpdateBlog";
 import Detail from "../pages/Detail";
 import NewBlog from "../pages/NewBlog";
+import PrivateRouter from "./PrivateRouter";
 
 const AppRouter = () => {
   return (
@@ -18,10 +19,10 @@ const AppRouter = () => {
         <Route path="/register" component={Register} />
         <Route path="/" exact component={Dashboard} />
 
-        <Route path="/profile" component={Profile} />
-        <Route path="/new-blog" component={NewBlog} />
-        <Route path="/update-blog/:id" component={UpdateBlog} />
-        <Route path="/detail" component={Detail} />
+        <PrivateRouter path="/profile" component={Profile} />
+        <PrivateRouter path="/new-blog" component={NewBlog} />
+        <PrivateRouter path="/update-blog/:id" component={UpdateBlog} />
+        <PrivateRouter path="/detail" component={Detail} />
       </Routes>
     </Router>
   );
