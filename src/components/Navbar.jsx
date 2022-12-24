@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,8 +8,9 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import cwLogo from "../assets/cw.jpeg";
-import { useAuth } from "../contexts/AuthContectProvider";
+import { useAuth } from "../contexts/AuthContextProvider";
 import { Link } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,14 +37,20 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     width: "40px",
   },
+  login: {
+    padding: 10,
+    fontSize: 20,
+    color: "white",
+    textDecoration: "none",
+  },
 }));
 
 export default function Navbar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -51,6 +58,14 @@ export default function Navbar() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    setAnchorEl(null);
+    logout();
+  };
+  const handleDashboard = () => {
+    setAnchorEl(null);
+    navigate("/");
   };
 
   return (
@@ -62,12 +77,18 @@ export default function Navbar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={handleDashboard}
           >
             <img src={cwLogo} alt="logo" className={classes.logo} />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            <span>Blog</span> App
-          </Typography>
+          <div className={classes.root}>
+            <Link href="/login" className={classes.login}>
+              <Typography variant="h6" className={classes.title}>
+                <span>Blog</span> App
+              </Typography>
+            </Link>
+          </div>
+
           <div>
             <IconButton
               aria-label="account of current user"
@@ -80,50 +101,38 @@ export default function Navbar() {
             </IconButton>
             {currentUser?.email ? (
               <Menu
-                id="menu-appbar"
                 anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                id="menu-appbar"
                 keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
                 open={open}
                 onClose={handleClose}
+                sx={{ marginTop: "2rem", marginLeft: "1rem" }}
               >
-                <Link to="/profile" className={classes.linkStyle}>
+                <Link href="/profile" style={classes.linkStyle}>
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                 </Link>
-                <Link to="/new-blog" className={classes.linkStyle}>
-                  <MenuItem onClick={handleClose}>New Blog</MenuItem>
+                <Link href="/new-blog" style={classes.linkStyle}>
+                  <MenuItem onClick={handleClose}>New</MenuItem>
                 </Link>
-                <Link to="/login" className={classes.linkStyle}>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Link>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             ) : (
               <Menu
-                id="menu-appbar"
                 anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                id="menu-appbar"
                 keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
                 open={open}
                 onClose={handleClose}
+                sx={{ marginTop: "2rem", marginLeft: "1.25rem" }}
               >
-                <Link to="/login" className={classes.linkStyle}>
+                <Link href="/login" style={classes.linkStyle}>
                   <MenuItem onClick={handleClose}>Login</MenuItem>
                 </Link>
-                <Link to="/register" className={classes.linkStyle}>
+                <Link href="/register" style={classes.linkStyle}>
                   <MenuItem onClick={handleClose}>Register</MenuItem>
                 </Link>
               </Menu>

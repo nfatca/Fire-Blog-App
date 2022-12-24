@@ -1,8 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
+import { Login } from "../pages/LoginRegister";
+import { Register } from "../pages/LoginRegister";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Profile";
 import UpdateBlog from "../pages/UpdateBlog";
@@ -12,19 +12,21 @@ import PrivateRouter from "./PrivateRouter";
 
 const AppRouter = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/" exact component={Dashboard} />
-
-        <PrivateRouter path="/profile" component={Profile} />
-        <PrivateRouter path="/new-blog" component={NewBlog} />
-        <PrivateRouter path="/update-blog/:id" component={UpdateBlog} />
-        <PrivateRouter path="/detail" component={Detail} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/register" element={<Register />} />
+        {/* <Route path="/about" element={<About />} /> */}
+        <Route element={<PrivateRouter />}>
+          <Route path="profile" element={<Profile />} />
+          <Route path="new-blog" element={<NewBlog />} />
+          <Route path="update-blog/:id" element={<UpdateBlog />} />
+          <Route path="detail/:id" element={<Detail />} />
+        </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 

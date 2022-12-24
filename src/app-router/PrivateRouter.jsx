@@ -1,16 +1,12 @@
-import { Reddit } from "@material-ui/icons";
 import React from "react";
 import { Route } from "react-router-dom";
-import { Navigate } from "react-router";
-import { useAuth } from "../contexts/AuthContectProvider";
+import { Navigate, Outlet } from "react-router";
+import { useAuth } from "../contexts/AuthContextProvider";
 
-const PrivateRouter = (props) => {
+const PrivateRouter = () => {
   const { currentUser } = useAuth();
-  return currentUser ? (
-    <Route path={props.path} component={props.component} />
-  ) : (
-    <Navigate to="/login" />
-  );
+
+  return currentUser ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRouter;
