@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     display: "none",
     fontFamily: "Girassol",
+    color: "white",
+    fontSize: 25,
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
@@ -84,7 +86,7 @@ export default function Navbar() {
           <div className={classes.root}>
             <Link href="/login" className={classes.login}>
               <Typography variant="h6" className={classes.title}>
-                <span>Blog</span> App
+                <span>Blog </span>App
               </Typography>
             </Link>
           </div>

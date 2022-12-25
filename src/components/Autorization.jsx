@@ -14,7 +14,6 @@ import * as yup from "yup";
 import loadingGif from "../assets/loading.gif";
 import googlePng from "../assets/google.png";
 import { useAuth } from "../contexts/AuthContextProvider";
-import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,7 +93,7 @@ const ValidationSchema = yup.object().shape({
 });
 
 const LoginAndRegisterForm = (props) => {
-  console.log(props);
+  // console.log(props);
   const handleGoogleProvider = () => {
     loginWithGoogle();
   };
