@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@mui/styles";
-import React from "react";
+import React, { useState } from "react";
 
 import blogPng from "../assets/blok.png";
 
@@ -46,14 +46,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const BlogForm = ({ newBlog, setNewBlog, newBlogHandler }) => {
+export const BlogForm = ({ blog, newBlogHandler }) => {
+  //   const { blog, newBlogHandler } = props;
+  const [newBlog, setNewBlog] = useState(blog);
   const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <form className={classes.form} noValidate>
+        <form
+          className={classes.form}
+          onSubmit={() => newBlogHandler(newBlog)}
+          noValidate
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -107,7 +113,6 @@ export const BlogForm = ({ newBlog, setNewBlog, newBlogHandler }) => {
             fullWidth
             variant="contained"
             className={classes.submit}
-            onClick={newBlogHandler}
           >
             Submit
           </Button>

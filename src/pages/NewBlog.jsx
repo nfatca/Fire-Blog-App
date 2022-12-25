@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const NewBlog = () => {
   const { currentUser } = useAuth();
-  const [newBlog, setNewBlog] = useState({
+  const blog = {
     author: currentUser.email,
     title: "",
     content: "",
@@ -59,7 +59,7 @@ const NewBlog = () => {
     get_like_count: 0,
     image: "",
     published_date: Date.now(),
-  });
+  };
   const { addBlog } = useBlog();
   const navigate = useNavigate();
   const classes = useStyles();
@@ -67,7 +67,7 @@ const NewBlog = () => {
   const newBlogHandler = (e) => {
     e.preventDefault();
     try {
-      addBlog(newBlog);
+      addBlog(e);
       // console.log(newBlog);
       navigate("/");
       toastSuccessNotify("Blog added successfully!");
@@ -88,11 +88,7 @@ const NewBlog = () => {
         <Typography component="h1" variant="h5" className={classes.title}>
           ── New Blog ──
         </Typography>
-        <BlogForm
-          newBlog={newBlog}
-          setNewBlog={setNewBlog}
-          newBlogHandler={newBlogHandler}
-        />
+        <BlogForm blog={blog} newBlogHandler={newBlogHandler} />
       </div>
     </Container>
   );
